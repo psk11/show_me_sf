@@ -1,0 +1,25 @@
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
+<script type="text/javascript" src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDaCEjieCQa7BRI1tzXpImoYNvh15Xe0KI&callback=initMap"
+    async defer></script>
+<h1>Cuurent Shows in San Fransisco</h1>
+<table id="available_shows">
+  <thead>
+    <tr>
+      <th>Locations</th>
+      <th>Production Company</th>
+      <th>Title</th>
+      <th>Director</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @json_data.each do |show|  %>
+      <tr>
+        <td><%= show["locations"] %></td>
+        <td><%= show["production_company"] %></td>
+        <td><%= show["title"] %></td>
+        <td><%= show["director"] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

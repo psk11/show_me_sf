@@ -1,0 +1,18 @@
+<h1>Cuurent Shows in San Fransisco</h1>
+<table>
+  <th>
+    <td>Locations</td>
+    <td>Production Company</td>
+    <td>Title</td>
+    <td>Director</td>
+    <td>Count is <% @showtime.count %></td>
+  </th>
+  <% @showtime.each do |data| %>
+    <tr>
+      <td><% data["locations"] %></td>
+      <td><% data["production_company"] %></td>
+      <td><% data["title"] %></td>
+      <td><% data["director"] %></td>
+    </tr>
+  <% end %>
+</table>

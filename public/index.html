@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+       #map {
+        width: 80%;
+        height: 500px;
+      }
+    </style>
+  </head>
+  <body>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+    <center><h1>Welcome to San Francisco ShowTime</h1></center>
+    <center><button type="button" onclick="initMap()">Click Me!</button></center>
+    <center><div id="map"></div></center>
+    <script>
+      function initMap() {
+        var map;
+        var locations = [];
+        var baseUrl = "http://localhost:3000/show_shows"
+
+        var data = getShows(baseUrl)["payload"];
+        var infowindow = new google.maps.InfoWindow();
+
+        var marker, i;
+
+        map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 3,
+            center: new google.maps.LatLng(data[0]["latitude"], data[0]["longitude"]),
+            mapTypeId: google.maps.MapTypeId.TERRAIN
+        });
+
+        for (i = 0; i < data.length; i++) {
+            marker = new google.maps.Marker({
+                position: new google.maps.LatLng(data[i]["latitude"], data[i]["longitude"]),
+                map: map
+            });
+
+            google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                return function () {
+                    infowindow.setContent(data[i]["title"]);
+                    infowindow.open(map, marker);
+                }
+            })(marker, i));
+        }
+      }
+
+      function getShows(baseUrl){
+        return $.ajax({
+          type: "GET",
+          url: baseUrl,
+          async: false
+        }).responseJSON;
+      }
+
+    </script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDaCEjieCQa7BRI1tzXpImoYNvh15Xe0KI&callback=initMap">
+    </script>
+  </body>
+</html>
